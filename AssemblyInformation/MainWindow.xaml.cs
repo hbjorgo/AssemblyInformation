@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace AssemblyInformation
 {
@@ -43,6 +44,22 @@ namespace AssemblyInformation
             windowSettings.Left = Left;
             windowSettings.State = WindowState;
             windowSettings.SaveSettings();
+        }
+
+        private void DataGrid_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (sender != null)
+            {
+                DataGrid grid = sender as DataGrid;
+                if (grid != null && grid.SelectedItems != null && grid.SelectedItems.Count == 1)
+                {
+                    DataGridRow dgr = grid.ItemContainerGenerator.ContainerFromItem(grid.SelectedItem) as DataGridRow;
+                    if (dgr.IsMouseOver)
+                    {
+                        (dgr as DataGridRow).IsSelected = false;
+                    }
+                }
+            }
         }
     }
 }

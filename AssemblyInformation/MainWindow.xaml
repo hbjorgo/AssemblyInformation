@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Closing="Window_Closing"
         Title="AssemblyInfo - HeboTech" Height="350" Width="650">
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding OpenCommand}" Key="O" Modifiers="Ctrl"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -14,15 +17,15 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
-            <MenuItem Header="File">
-                <MenuItem Header="Open..." Command="{Binding OpenCommand}"/>
-                <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open..." Command="{Binding OpenCommand}"/>
+                <MenuItem Header="_Exit" Command="{Binding ExitCommand}"/>
             </MenuItem>
-            <MenuItem Header="View">
-                <MenuItem Header="Clear" Command="{Binding ClearCommand}"/>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Clear" Command="{Binding ClearCommand}"/>
             </MenuItem>
         </Menu>
-        <DataGrid ItemsSource="{Binding AssemblyInfos}" AutoGenerateColumns="False" AlternationCount="2" AllowDrop="True" Drop="DataGrid_Drop" Grid.Row="1">
+        <DataGrid ItemsSource="{Binding AssemblyInfos}" AutoGenerateColumns="False" AlternationCount="2" AllowDrop="True" Drop="DataGrid_Drop" MouseLeftButtonDown="DataGrid_MouseLeftButtonDown" Grid.Row="1">
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Style.Triggers>
@@ -33,12 +36,37 @@
                 </Style>
             </DataGrid.ItemContainerStyle>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="File Name" Binding="{Binding FileName}"/>
-                <DataGridTextColumn Header="PE Kinds" Binding="{Binding PortableExecutableKinds}"/>
-                <DataGridTextColumn Header="Architecture" Binding="{Binding ImageFileMachine}"/>
-                <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension}"/>
-                <DataGridTextColumn Header="Full Path" Binding="{Binding FullPath}"/>
+                <DataGridTextColumn Header="File Name" Binding="{Binding FileName, Mode=OneWay}"/>
+                <DataGridTextColumn Header="PE Kinds" Binding="{Binding PortableExecutableKinds, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Architecture" Binding="{Binding ImageFileMachine, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Extension" Binding="{Binding FileExtension, Mode=OneWay}"/>
+                <DataGridTextColumn Header="Full Path" Binding="{Binding FullPath, Mode=OneWay}"/>
             </DataGrid.Columns>
+            <DataGrid.RowDetailsTemplate>
+                <DataTemplate>
+                    <TreeView>
+                        <TreeViewItem Header="Loaded From GAC">
+                            <TextBlock Text="{Binding LoadedFromGAC}"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Is Fully Trusted">
+                            <TextBlock Text="{Binding IsFullyTrusted}"/>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Referenced Assemblies">
+                            <DataGrid ItemsSource="{Binding ReferencedAssemblies, Mode=OneWay}" AlternationCount="2" Margin="10">
+                                <DataGrid.ItemContainerStyle>
+                                    <Style TargetType="{x:Type DataGridRow}">
+                                        <Style.Triggers>
+                                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                <Setter Property="Background" Value="LightGray" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </DataGrid.ItemContainerStyle>
+                            </DataGrid>
+                        </TreeViewItem>
+                    </TreeView>
+                </DataTemplate>
+            </DataGrid.RowDetailsTemplate>
         </DataGrid>
         <!--<local:BusyOverlay Text="Loading..." IsBusy="{Binding IsLoading}" Grid.Row="1"/>-->
         <local:ProgressOverlay Text="Loading..." Value="{Binding Progress}" Grid.Row="1"/>

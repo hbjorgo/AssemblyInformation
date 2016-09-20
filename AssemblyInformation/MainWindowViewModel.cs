@@ -45,21 +45,17 @@ namespace AssemblyInformation
                     AppDomain isolated = AppDomain.CreateDomain("Isolation");
                     AssemblyInfoRetriever handle = (AssemblyInfoRetriever)isolated.CreateInstance(Assembly.GetExecutingAssembly().FullName, "AssemblyInformation.AssemblyInfoRetriever").Unwrap();
 
-                    PortableExecutableKinds peKind;
-                    ImageFileMachine imageFileMachine;
-                    handle.GetInfo(filePath, out peKind, out imageFileMachine);
+                    ai = handle.GetInfo(filePath);
 
                     handle = null;
                     AppDomain.Unload(isolated);
                     isolated = null;
-
-                    ai = new AssemblyInfo(Path.GetFileName(filePath), filePath, Path.GetExtension(filePath), peKind, imageFileMachine);
                 }
                 catch (BadImageFormatException)
                 {
                     ai = new AssemblyInfo(Path.GetFileName(filePath), filePath, Path.GetExtension(filePath));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     //Something went wrong.
                 }
