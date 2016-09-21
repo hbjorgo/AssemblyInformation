@@ -17,8 +17,10 @@ namespace AssemblyInformation
             InitializeComponent();
 
             windowSettings = new WindowSettings();
-            Width = windowSettings.Width;
-            Height = windowSettings.Height;
+            if (windowSettings.Width > 0)
+                Width = windowSettings.Width;
+            if (windowSettings.Height > 0)
+                Height = windowSettings.Height;
             Top = windowSettings.Top;
             Left = windowSettings.Left;
             WindowState = windowSettings.State;
