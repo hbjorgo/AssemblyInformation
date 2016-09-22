@@ -45,6 +45,9 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <TreeView>
+                        <TreeViewItem Header="Image Runtime Version">
+                            <TextBlock Text="{Binding ImageRuntimeVersion}"/>
+                        </TreeViewItem>
                         <TreeViewItem Header="Referenced Assemblies">
                             <DataGrid ItemsSource="{Binding ReferencedAssemblies, Mode=OneWay}" IsReadOnly="True" AlternationCount="2" Margin="10">
                                 <DataGrid.ItemContainerStyle>

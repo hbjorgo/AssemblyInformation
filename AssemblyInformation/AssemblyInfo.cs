@@ -20,7 +20,8 @@ namespace AssemblyInformation
             string fileExtension,
             PortableExecutableKinds portableExecutableKinds,
             ImageFileMachine imageFileMachine,
-            IEnumerable<AssemblyName> referencedAssemblies
+            IEnumerable<AssemblyName> referencedAssemblies,
+            string imageRuntimeVersion
             )
         {
             this.FileName = fileName;
@@ -29,6 +30,7 @@ namespace AssemblyInformation
             this.PortableExecutableKinds = portableExecutableKinds;
             this.ImageFileMachine = imageFileMachine;
             this.ReferencedAssemblies = referencedAssemblies;
+            this.ImageRuntimeVersion = imageRuntimeVersion;
         }
 
         public string FileName { get; private set; }
@@ -37,5 +39,6 @@ namespace AssemblyInformation
         public PortableExecutableKinds PortableExecutableKinds { get; private set; }
         public ImageFileMachine ImageFileMachine { get; private set; }
         public IEnumerable<AssemblyName> ReferencedAssemblies { get; private set; }
+        public string ImageRuntimeVersion { get; private set; }
     }
 }

@@ -16,7 +16,9 @@ namespace AssemblyInformation
 
             AssemblyName[] referencedAssemblies = assembly.GetReferencedAssemblies();
 
-            AssemblyInfo ai = new AssemblyInfo(Path.GetFileName(fileName), fileName, Path.GetExtension(fileName), peKind, imageFileMachine, referencedAssemblies);
+            string imageRuntimeVersion = assembly.ImageRuntimeVersion;
+
+            AssemblyInfo ai = new AssemblyInfo(Path.GetFileName(fileName), fileName, Path.GetExtension(fileName), peKind, imageFileMachine, referencedAssemblies, imageRuntimeVersion);
             return ai;
         }
     }
