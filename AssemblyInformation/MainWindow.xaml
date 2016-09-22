@@ -45,12 +45,6 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <TreeView>
-                        <TreeViewItem Header="Loaded From GAC">
-                            <TextBlock Text="{Binding LoadedFromGAC}"/>
-                        </TreeViewItem>
-                        <TreeViewItem Header="Is Fully Trusted">
-                            <TextBlock Text="{Binding IsFullyTrusted}"/>
-                        </TreeViewItem>
                         <TreeViewItem Header="Referenced Assemblies">
                             <DataGrid ItemsSource="{Binding ReferencedAssemblies, Mode=OneWay}" IsReadOnly="True" AlternationCount="2" Margin="10">
                                 <DataGrid.ItemContainerStyle>

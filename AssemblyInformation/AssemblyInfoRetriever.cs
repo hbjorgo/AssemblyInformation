@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -17,12 +16,7 @@ namespace AssemblyInformation
 
             AssemblyName[] referencedAssemblies = assembly.GetReferencedAssemblies();
 
-            bool loadedFromGAC = assembly.GlobalAssemblyCache;
-
-            //IEnumerable<CustomAttributeData> customAttributes = assembly.CustomAttributes;
-            bool isFullyTrusted = assembly.IsFullyTrusted;
-
-            AssemblyInfo ai = new AssemblyInfo(Path.GetFileName(fileName), fileName, Path.GetExtension(fileName), peKind, imageFileMachine, referencedAssemblies, loadedFromGAC, isFullyTrusted);
+            AssemblyInfo ai = new AssemblyInfo(Path.GetFileName(fileName), fileName, Path.GetExtension(fileName), peKind, imageFileMachine, referencedAssemblies);
             return ai;
         }
     }
