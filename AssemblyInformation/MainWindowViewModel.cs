@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -40,24 +39,20 @@ namespace AssemblyInformation
 
             if (File.Exists(filePath))
             {
-                try
+                using (Isolated<AssemblyInfoRetriever> isolated = new Isolated<AssemblyInfoRetriever>())
                 {
-                    AppDomain isolated = AppDomain.CreateDomain("Isolation");
-                    AssemblyInfoRetriever handle = (AssemblyInfoRetriever)isolated.CreateInstance(Assembly.GetExecutingAssembly().FullName, "AssemblyInformation.AssemblyInfoRetriever").Unwrap();
-
-                    ai = handle.GetInfo(filePath);
-
-                    handle = null;
-                    AppDomain.Unload(isolated);
-                    isolated = null;
-                }
-                catch (BadImageFormatException)
-                {
-                    ai = new AssemblyInfo(Path.GetFileName(filePath), filePath, Path.GetExtension(filePath));
-                }
-                catch (Exception ex)
-                {
-                    //Something went wrong.
+                    try
+                    {
+                        ai = isolated.Handle.GetInfo(filePath);
+                    }
+                    catch (BadImageFormatException)
+                    {
+                        ai = new AssemblyInfo(Path.GetFileName(filePath), filePath, Path.GetExtension(filePath));
+                    }
+                    catch (Exception ex)
+                    {
+                        //Something went wrong.
+                    }
                 }
             }
 

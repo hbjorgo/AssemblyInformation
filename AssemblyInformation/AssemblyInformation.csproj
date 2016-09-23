@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="FileOpenDialog.cs" />
     <Compile Include="IOpenFileService.cs" />
+    <Compile Include="Isolated.cs" />
     <Compile Include="PercentageToVisibilityConverter.cs" />
     <Compile Include="ProgressOverlay.xaml.cs">
       <DependentUpon>ProgressOverlay.xaml</DependentUpon>
