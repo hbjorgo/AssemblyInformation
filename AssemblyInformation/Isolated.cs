@@ -25,7 +25,7 @@ namespace AssemblyInformation
             }
         }
 
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (disposed)
                 return;
@@ -35,8 +35,12 @@ namespace AssemblyInformation
                 if (domain != null)
                 {
                     AppDomain.Unload(domain);
-
                     domain = null;
+                }
+
+                if (handle != null && handle is IDisposable)
+                {
+                    ((IDisposable)handle).Dispose();
                 }
             }
 
@@ -47,6 +51,11 @@ namespace AssemblyInformation
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        ~Isolated()
+        {
+            Dispose(false);
         }
     }
 }
